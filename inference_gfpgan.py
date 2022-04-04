@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 import cv2
 import glob
 import numpy as np
@@ -109,10 +110,15 @@ def main():
 
     # ------------------------ restore ------------------------
     for img_path in img_list:
+
         # read image
         img_name = os.path.basename(img_path)
         print(f'Processing {img_name} ...')
         basename, ext = os.path.splitext(img_name)
+        o = Path(os.path.join(args.output, 'restored_faces', f'{basename}_00.png'))
+        print(o)
+        if o.exists():
+            continue
         input_img = cv2.imread(img_path, cv2.IMREAD_COLOR)
 
         # restore faces and background if necessary
